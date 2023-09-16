@@ -49,18 +49,12 @@ const run = async () => {
     JSON.stringify(sortedInd)
   );
   await fs.promises.writeFile(`${outDir}/name-index.csv`, createCsv(sortedInd));
-  await fs.promises.writeFile(
-    `${outDir}/name-index-1l.csv`,
-    createCsv(_.sortBy(index, [(i) => i.n.slice(0, 1), (i) => i.r]))
-  );
-  await fs.promises.writeFile(
-    `${outDir}/name-index-2l.csv`,
-    createCsv(_.sortBy(index, [(i) => i.n.slice(0, 2), (i) => i.r]))
-  );
-  await fs.promises.writeFile(
-    `${outDir}/name-index-3l.csv`,
-    createCsv(_.sortBy(index, [(i) => i.n.slice(0, 3), (i) => i.r]))
-  );
+  for (let i = 1; i <= 10; i++) {
+    await fs.promises.writeFile(
+      `${outDir}/name-index-${i}l.csv`,
+      createCsv(_.sortBy(index, [(e) => e.n.slice(0, i), (e) => e.r]))
+    );
+  }
 };
 
 run()
