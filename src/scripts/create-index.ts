@@ -50,9 +50,13 @@ const run = async () => {
   );
   await fs.promises.writeFile(`${outDir}/name-index.csv`, createCsv(sortedInd));
   for (let i = 1; i <= 10; i++) {
+    const grouped = _.groupBy(index, (e) => e.n.slice(0, i));
+    const first10 = _.mapValues(grouped, (group) =>
+      _.sortBy(group, (e) => e.r).slice(0, 10)
+    );
     await fs.promises.writeFile(
-      `${outDir}/name-index-${i}l.csv`,
-      createCsv(_.sortBy(index, [(e) => e.n.slice(0, i), (e) => e.r]))
+      `${outDir}/search-index-first-${i}.csv`,
+      createCsv(_.flatten(_.values(first10)))
     );
   }
 };
