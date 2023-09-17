@@ -54,9 +54,10 @@ const run = async () => {
     const first10 = _.mapValues(grouped, (group) =>
       _.sortBy(group, (e) => e.r).slice(0, 10)
     );
+		const flattenedSorted = _.sortBy(_.flatten(_.values(first10)), (e) => e.n.slice(0, i));
     await fs.promises.writeFile(
       `${outDir}/search-index-first-${i}.csv`,
-      createCsv(_.flatten(_.values(first10)))
+      createCsv(flattenedSorted)
     );
   }
 };
